@@ -194,23 +194,35 @@
             <div class="instructions">
                 <h3>📋 How to use:</h3>
                 <ol>
-                    <li>Open Instagram in Safari on your iPhone</li>
-                    <li>Go to your profile page</li>
-                    <li>Make sure you're logged in</li>
-                    <li>Come back here and tap "Start Analysis"</li>
+                    <li>Open Instagram.com in Safari on your iPhone</li>
+                    <li>Go to your profile page and tap "followers"</li>
+                    <li>Copy all usernames from your followers list</li>
+                    <li>Go back to your profile and tap "following"</li>
+                    <li>Copy all usernames from your following list</li>
+                    <li>Paste both lists below and tap "Analyze Data"</li>
                 </ol>
             </div>
 
             <div class="step">
-                <h3>🔍 Step 1: Open Instagram</h3>
-                <p>Open Instagram in Safari and go to your profile page. Make sure you're logged in to your account.</p>
-                <button class="btn" onclick="openInstagram()">Open Instagram</button>
+                <h3>🔍 Step 1: Get Your Instagram Data</h3>
+                <p>Follow the instructions above to copy your followers and following lists from Instagram. Make sure you're logged in to your Instagram account.</p>
             </div>
 
             <div class="step">
-                <h3>📊 Step 2: Start Analysis</h3>
-                <p>Once you're on your Instagram profile, come back here and start the analysis. This will check your followers and following lists.</p>
-                <button class="btn" id="analyzeBtn" onclick="startAnalysis()" disabled>Start Analysis</button>
+                <h3>📊 Step 2: Enter Your Data</h3>
+                <p>Copy your followers and following lists from Instagram and paste them here:</p>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; color: #333; font-weight: 500;">Followers (one username per line):</label>
+                    <textarea id="followers-input" placeholder="username1&#10;username2&#10;username3" style="width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 8px; font-size: 14px; resize: vertical; min-height: 80px; font-family: monospace;"></textarea>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; color: #333; font-weight: 500;">Following (one username per line):</label>
+                    <textarea id="following-input" placeholder="username1&#10;username2&#10;username3" style="width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 8px; font-size: 14px; resize: vertical; min-height: 80px; font-family: monospace;"></textarea>
+                </div>
+                
+                <button class="btn" id="analyzeBtn" onclick="startAnalysis()">🔍 Analyze Data</button>
             </div>
 
             <div id="loading" class="loading" style="display: none;">
@@ -243,19 +255,17 @@
     <script>
         let analysisData = null;
 
-        function openInstagram() {
-            // Try to open Instagram in Safari
-            const instagramUrl = 'https://www.instagram.com/';
-            window.open(instagramUrl, '_blank');
-            
-            // Enable the analyze button after a delay
-            setTimeout(() => {
-                document.getElementById('analyzeBtn').disabled = false;
-                document.getElementById('analyzeBtn').textContent = 'Start Analysis';
-            }, 2000);
-        }
+
 
         function startAnalysis() {
+            const followersText = document.getElementById('followers-input').value;
+            const followingText = document.getElementById('following-input').value;
+
+            if (!followersText.trim() || !followingText.trim()) {
+                showError('Please enter both followers and following data.');
+                return;
+            }
+
             // Show loading state
             document.getElementById('loading').style.display = 'block';
             document.getElementById('results').style.display = 'none';
@@ -263,34 +273,69 @@
             document.getElementById('analyzeBtn').disabled = true;
             document.getElementById('analyzeBtn').textContent = 'Analyzing...';
 
-            // Simulate analysis (in a real app, this would connect to Instagram's API)
+            // Process the data
             setTimeout(() => {
-                // Mock data for demonstration
-                analysisData = {
-                    followers: generateMockUsernames(1500),
-                    following: generateMockUsernames(1200),
-                    notFollowingBack: generateMockUsernames(300)
-                };
+                try {
+                    const followers = parseUsernames(followersText);
+                    const following = parseUsernames(followingText);
 
-                // Show results
-                document.getElementById('followersCount').textContent = analysisData.followers.length;
-                document.getElementById('followingCount').textContent = analysisData.following.length;
-                document.getElementById('notFollowingCount').textContent = analysisData.notFollowingBack.length;
+                    if (followers.length === 0 || following.length === 0) {
+                        showError('No valid usernames found. Please check your input.');
+                        return;
+                    }
 
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('results').style.display = 'block';
-                document.getElementById('analyzeBtn').disabled = false;
-                document.getElementById('analyzeBtn').textContent = 'Analyze Again';
-            }, 3000);
+                    // Process the data
+                    const followersSet = new Set(followers.map(f => f.toLowerCase()));
+                    const followingSet = new Set(following.map(f => f.toLowerCase()));
+                    
+                    // Find who's not following back
+                    const notFollowingBack = following.filter(user => 
+                        !followersSet.has(user.toLowerCase())
+                    );
+
+                    // Find who you're not following back
+                    const notFollowingThem = followers.filter(user => 
+                        !followingSet.has(user.toLowerCase())
+                    );
+
+                    // Find mutual followers
+                    const mutual = followers.filter(user => 
+                        followingSet.has(user.toLowerCase())
+                    );
+
+                    analysisData = {
+                        followers: followers,
+                        following: following,
+                        notFollowingBack: notFollowingBack,
+                        notFollowingThem: notFollowingThem,
+                        mutual: mutual
+                    };
+
+                    // Show results
+                    document.getElementById('followersCount').textContent = followers.length;
+                    document.getElementById('followingCount').textContent = following.length;
+                    document.getElementById('notFollowingCount').textContent = notFollowingBack.length;
+
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('results').style.display = 'block';
+                    document.getElementById('analyzeBtn').disabled = false;
+                    document.getElementById('analyzeBtn').textContent = 'Analyze Again';
+                } catch (error) {
+                    showError('Error processing data: ' + error.message);
+                    document.getElementById('analyzeBtn').disabled = false;
+                    document.getElementById('analyzeBtn').textContent = 'Try Again';
+                }
+            }, 1000);
         }
 
-        function generateMockUsernames(count) {
-            const usernames = [];
-            for (let i = 0; i < count; i++) {
-                usernames.push(`user_${Math.floor(Math.random() * 100000)}`);
-            }
-            return usernames;
+        function parseUsernames(text) {
+            return text.split('\n')
+                .map(line => line.trim())
+                .filter(line => line.length > 0 && !line.startsWith('#'))
+                .map(username => username.replace(/^@/, '')); // Remove @ symbols
         }
+
+
 
         function downloadResults() {
             if (!analysisData) return;
@@ -298,7 +343,9 @@
             // Create CSV content
             const csvContent = [
                 'username,type',
-                ...analysisData.notFollowingBack.map(username => `${username},not_following_back`)
+                ...analysisData.notFollowingBack.map(username => `${username},not_following_back`),
+                ...analysisData.notFollowingThem.map(username => `${username},you_not_following`),
+                ...analysisData.mutual.map(username => `${username},mutual`)
             ].join('\n');
 
             // Create and download file
