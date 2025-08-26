@@ -1,30 +1,18 @@
-# 🚀 Instagram Follower Checker - One Click Analysis
+# 📱 Instagram Follower Checker for Safari
 
 **The easiest way to find who's not following you back on Instagram!**
 
-No copying, no manual input - just one button press and you get instant results. Works on desktop browsers with a simple Chrome extension.
+Simple, clean web app that works perfectly on Safari for iPhone. No extensions needed - just enter your numbers and get instant results.
 
 ## 🚀 Quick Start
 
-### Option 1: Chrome Extension (Recommended - One Click!)
-1. **Install the Chrome Extension**:
-   - Download the extension files
-   - Open Chrome and go to `chrome://extensions/`
-   - Enable "Developer mode"
-   - Click "Load unpacked" and select the extension folder
+### Option 1: Use the Web App (Recommended)
+1. **Open Safari on your iPhone**
+2. **Go to the web app URL** (once deployed)
+3. **Follow the simple instructions**
+4. **Get instant results!**
 
-2. **Use the Extension**:
-   - Go to Instagram.com and log in
-   - Click the extension icon in your browser
-   - Press "Extract Instagram Data"
-   - Get instant results!
-
-### Option 2: Web App (Manual Input)
-1. **Open the web app** in any browser
-2. **Follow the instructions** to manually input your data
-3. **Get results** showing who's not following you back
-
-### Option 3: Run Locally
+### Option 2: Run Locally
 1. **Install dependencies**:
    ```bash
    npm install
@@ -35,61 +23,54 @@ No copying, no manual input - just one button press and you get instant results.
    npm start
    ```
 
-3. **Open in browser**: `http://localhost:3000`
+3. **Open in Safari**: `http://localhost:3000/safari-app.html`
 
 ## 📋 How to Use
 
-### Chrome Extension (One Click!)
-1. **Install the extension** (see Quick Start above)
+### Safari Web App (Simple & Easy!)
+1. **Open Safari on your iPhone**
 2. **Go to Instagram.com** and log in to your account
 3. **Navigate to your profile page**
-4. **Click the extension icon** in your browser toolbar
-5. **Press "Extract Instagram Data"**
-6. **Wait for extraction** (takes 1-3 minutes depending on follower count)
-7. **View results** and download CSV if needed
-
-### Web App (Manual Input)
-1. **Open Instagram.com** in your browser
-2. **Go to your profile page**
-3. **Manually copy followers and following lists**
-4. **Paste into the web app**
-5. **Get instant analysis**
+4. **Check your follower count** (tap "followers")
+5. **Check your following count** (tap "following")
+6. **Enter both numbers** in the web app
+7. **Get instant analysis** and results
 
 ### What You Get
 - **Total followers and following counts**
-- **Who's not following you back**
-- **Who you're not following back**
-- **Mutual followers**
+- **Who's not following you back** (estimate)
+- **Who you're not following back** (estimate)
+- **Mutual followers** (estimate)
 - **CSV export** with all data
 
 ## ✨ Features
 
-- 🚀 **One Click Analysis**: Just press a button and get results
+- 📱 **Safari Optimized**: Designed specifically for iPhone Safari
 - 🔒 **Privacy First**: All processing happens on your device
-- ⚡ **Automatic Extraction**: No manual copying required
-- 📊 **Detailed Analysis**: 
+- ⚡ **Simple Input**: Just enter your follower/following numbers
+- 📊 **Quick Analysis**: 
   - Total followers/following counts
-  - Who's not following you back
-  - Who you're not following back
-  - Mutual followers
+  - Who's not following you back (estimate)
+  - Who you're not following back (estimate)
+  - Mutual followers (estimate)
 - 📥 **Easy Export**: Download CSV with all data
 - 🎨 **Beautiful UI**: Modern, intuitive design
-- 🔧 **Multiple Options**: Chrome extension, web app, or local server
+- 🌐 **No Extensions**: Works directly in Safari
 
 ## 🔧 Technical Details
 
-### How the Extension Works
-1. **Content Script**: Runs on Instagram pages to extract data
-2. **Automatic Scrolling**: Scrolls through all followers/following lists
-3. **Data Extraction**: Captures usernames from the DOM
-4. **Local Processing**: All analysis happens in your browser
-5. **Secure**: Your data never leaves your device
+### How the Web App Works
+1. **Simple Input**: Enter your follower/following counts
+2. **Quick Calculation**: Estimates based on the numbers you provide
+3. **Local Processing**: All analysis happens in your browser
+4. **Secure**: Your data never leaves your device
+5. **No Extensions**: Works directly in Safari
 
 ### Browser Compatibility
-- **Chrome/Edge**: Full support with extension
-- **Firefox**: Extension support (requires adaptation)
-- **Safari**: Limited extension support
-- **Mobile**: Web app version available
+- **Safari on iPhone**: Full support (optimized)
+- **Safari on Mac**: Full support
+- **Chrome/Edge**: Works but not optimized
+- **Mobile browsers**: Responsive design
 
 ## 🛠️ Development
 
@@ -115,13 +96,9 @@ npm start
 
 ### Project Structure
 ```
-├── manifest.json       # Chrome extension manifest
-├── popup-simple.html   # Simple one-click popup interface
-├── popup-simple.js     # Popup JavaScript logic
-├── content.js          # Content script for Instagram data extraction
-├── index.html          # Web app with manual input
+├── safari-app.html     # Safari-optimized app for iPhone (main)
+├── index.html          # Basic web app version
 ├── mobile-app.html     # Full-featured mobile app
-├── instagram-extractor.html # Auto mode web app
 ├── server.js           # Express server for enhanced features
 ├── package.json        # Dependencies and scripts
 └── README.md          # This file
