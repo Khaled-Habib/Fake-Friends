@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background: #e8f5e8;
+            border-radius: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test App</h1>
+        <p>Testing button functionality...</p>
+        
+        <button class="btn" onclick="testButton()">Test Button</button>
+        <button class="btn" onclick="openInstagram()">Open Instagram</button>
+        
+        <div style="margin-top: 20px;">
+            <input type="number" id="test-input" placeholder="Enter a number">
+            <button class="btn" onclick="calculateTest()">Calculate</button>
+        </div>
+        
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        function testButton() {
+            alert('Button works!');
+            console.log('Test button clicked');
+        }
+        
+        function openInstagram() {
+            window.open('https://www.instagram.com/', '_blank');
+            console.log('Opening Instagram');
+        }
+        
+        function calculateTest() {
+            const input = document.getElementById('test-input').value;
+            if (input) {
+                const result = parseInt(input) * 2;
+                document.getElementById('result').innerHTML = `Result: ${result}`;
+                document.getElementById('result').style.display = 'block';
+                console.log('Calculated:', result);
+            } else {
+                alert('Please enter a number');
+            }
+        }
+        
+        // Test on load
+        console.log('App loaded successfully');
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded');
+        });
+    </script>
+</body>
+</html>

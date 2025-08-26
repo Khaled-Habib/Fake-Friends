@@ -304,22 +304,48 @@
     <script>
         let analysisData = null;
 
+        // Debug function
+        function debug(message) {
+            console.log('Debug:', message);
+            if (typeof alert !== 'undefined') {
+                alert('Debug: ' + message);
+            }
+        }
+
         function openInstagram() {
-            const instagramUrl = 'https://www.instagram.com/';
-            window.open(instagramUrl, '_blank');
-            showSuccess('Instagram opened! Go to your profile page and check your numbers.');
+            try {
+                debug('Opening Instagram...');
+                const instagramUrl = 'https://www.instagram.com/';
+                window.open(instagramUrl, '_blank');
+                showSuccess('Instagram opened! Go to your profile page and check your numbers.');
+            } catch (error) {
+                debug('Error opening Instagram: ' + error.message);
+                showError('Could not open Instagram. Please go to instagram.com manually.');
+            }
         }
 
         function calculateEstimate() {
-            const followersCount = parseInt(document.getElementById('followers-count').value);
-            const followingCount = parseInt(document.getElementById('following-count').value);
+            try {
+                debug('Calculating estimate...');
+                const followersInput = document.getElementById('followers-count');
+                const followingInput = document.getElementById('following-count');
+                
+                if (!followersInput || !followingInput) {
+                    debug('Input elements not found');
+                    showError('Could not find input elements. Please refresh the page.');
+                    return;
+                }
+                
+                const followersCount = parseInt(followersInput.value);
+                const followingCount = parseInt(followingInput.value);
 
-            if (!followersCount || !followingCount) {
-                showError('Please enter both numbers.');
-                return;
-            }
+                if (!followersCount || !followingCount) {
+                    showError('Please enter both numbers.');
+                    return;
+                }
 
-            showLoading();
+                debug('Numbers entered: ' + followersCount + ' followers, ' + followingCount + ' following');
+                showLoading();
 
             setTimeout(() => {
                 // Calculate estimate
@@ -404,6 +430,21 @@
             document.body.style.webkitUserSelect = 'none';
             document.body.style.webkitTouchCallout = 'none';
         }
+        
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            debug('App loaded successfully');
+            console.log('Instagram Checker loaded');
+        });
+        
+        // Test if functions are available
+        window.testFunctions = function() {
+            debug('Testing functions...');
+            if (typeof openInstagram === 'function') debug('openInstagram function exists');
+            if (typeof calculateEstimate === 'function') debug('calculateEstimate function exists');
+            if (typeof showError === 'function') debug('showError function exists');
+            if (typeof showSuccess === 'function') debug('showSuccess function exists');
+        };
     </script>
 </body>
 </html>
