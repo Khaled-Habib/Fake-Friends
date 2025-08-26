@@ -192,37 +192,20 @@
 
         <div class="content">
             <div class="instructions">
-                <h3>📋 How to use:</h3>
-                <ol>
-                    <li>Open Instagram.com in Safari on your iPhone</li>
-                    <li>Go to your profile page and tap "followers"</li>
-                    <li>Copy all usernames from your followers list</li>
-                    <li>Go back to your profile and tap "following"</li>
-                    <li>Copy all usernames from your following list</li>
-                    <li>Paste both lists below and tap "Analyze Data"</li>
-                </ol>
+                <h3>📱 iPhone Safari Instagram Checker</h3>
+                <p>Find who's not following you back on Instagram using Safari on your iPhone</p>
             </div>
 
             <div class="step">
-                <h3>🔍 Step 1: Get Your Instagram Data</h3>
-                <p>Follow the instructions above to copy your followers and following lists from Instagram. Make sure you're logged in to your Instagram account.</p>
+                <h3>🔍 Step 1: Open Instagram in Safari</h3>
+                <p>Open Safari on your iPhone and go to Instagram.com. Log in to your account.</p>
+                <button class="btn btn-warning" onclick="openInstagram()">📸 Open Instagram</button>
             </div>
 
             <div class="step">
-                <h3>📊 Step 2: Enter Your Data</h3>
-                <p>Copy your followers and following lists from Instagram and paste them here:</p>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 8px; color: #333; font-weight: 500;">Followers (one username per line):</label>
-                    <textarea id="followers-input" placeholder="username1&#10;username2&#10;username3" style="width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 8px; font-size: 14px; resize: vertical; min-height: 80px; font-family: monospace;"></textarea>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 8px; color: #333; font-weight: 500;">Following (one username per line):</label>
-                    <textarea id="following-input" placeholder="username1&#10;username2&#10;username3" style="width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 8px; font-size: 14px; resize: vertical; min-height: 80px; font-family: monospace;"></textarea>
-                </div>
-                
-                <button class="btn" id="analyzeBtn" onclick="startAnalysis()">🔍 Analyze Data</button>
+                <h3>📊 Step 2: Quick Analysis</h3>
+                <p>Since Safari on iPhone can't automatically extract data, we'll use a smart approach:</p>
+                <button class="btn" onclick="startQuickAnalysis()">🚀 Start Quick Analysis</button>
             </div>
 
             <div id="loading" class="loading" style="display: none;">

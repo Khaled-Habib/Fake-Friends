@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Follower Checker - Safari</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 30px 20px;
+        }
+
+        .step {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .step h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .step p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .results {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8f5e8;
+            border-radius: 12px;
+            border: 1px solid #4caf50;
+        }
+
+        .results h3 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .stat strong {
+            color: #333;
+        }
+
+        .download-btn {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid #ffcdd2;
+            white-space: pre-line;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid #c3e6cb;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .instructions h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .instructions ol {
+            color: #856404;
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📱 Instagram Checker</h1>
+            <p>For Safari on iPhone</p>
+        </div>
+
+        <div class="content">
+            <div class="instructions">
+                <h3>📋 How to use:</h3>
+                <ol>
+                    <li>Open Instagram.com in Safari on your iPhone</li>
+                    <li>Go to your profile page</li>
+                    <li>Tap "followers" and note the number</li>
+                    <li>Tap "following" and note the number</li>
+                    <li>Enter both numbers below</li>
+                </ol>
+            </div>
+
+            <div class="step">
+                <h3>🔍 Step 1: Open Instagram</h3>
+                <p>Open Safari and go to Instagram.com. Log in to your account.</p>
+                <button class="btn btn-warning" onclick="openInstagram()">📸 Open Instagram</button>
+            </div>
+
+            <div class="step">
+                <h3>📊 Step 2: Enter Your Numbers</h3>
+                <p>Enter your follower and following counts from Instagram:</p>
+                
+                <div class="input-group">
+                    <label for="followers-count">Number of Followers:</label>
+                    <input type="number" id="followers-count" placeholder="e.g., 1500">
+                </div>
+                
+                <div class="input-group">
+                    <label for="following-count">Number of Following:</label>
+                    <input type="number" id="following-count" placeholder="e.g., 1200">
+                </div>
+                
+                <button class="btn" onclick="calculateEstimate()">📊 Calculate Estimate</button>
+            </div>
+
+            <div id="loading" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Calculating...</p>
+            </div>
+
+            <div id="results" class="results" style="display: none;">
+                <h3>📈 Quick Estimate</h3>
+                <div class="stat">
+                    <span>Total Followers:</span>
+                    <strong id="followersCount">0</strong>
+                </div>
+                <div class="stat">
+                    <span>Total Following:</span>
+                    <strong id="followingCount">0</strong>
+                </div>
+                <div class="stat">
+                    <span>Not Following Back:</span>
+                    <strong id="notFollowingCount">0</strong>
+                </div>
+                <div class="stat">
+                    <span>You're Not Following:</span>
+                    <strong id="notFollowingThemCount">0</strong>
+                </div>
+                <div class="stat">
+                    <span>Mutual Followers:</span>
+                    <strong id="mutualCount">0</strong>
+                </div>
+                
+                <button class="download-btn" onclick="downloadResults()">📥 Download Results</button>
+            </div>
+
+            <div id="error" class="error" style="display: none;"></div>
+            <div id="success" class="success" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        let analysisData = null;
+
+        function openInstagram() {
+            const instagramUrl = 'https://www.instagram.com/';
+            window.open(instagramUrl, '_blank');
+            showSuccess('Instagram opened! Go to your profile page and check your numbers.');
+        }
+
+        function calculateEstimate() {
+            const followersCount = parseInt(document.getElementById('followers-count').value);
+            const followingCount = parseInt(document.getElementById('following-count').value);
+
+            if (!followersCount || !followingCount) {
+                showError('Please enter both numbers.');
+                return;
+            }
+
+            showLoading();
+
+            setTimeout(() => {
+                // Calculate estimate
+                const notFollowingBack = Math.max(0, followingCount - followersCount);
+                const notFollowingThem = Math.max(0, followersCount - followingCount);
+                const mutual = Math.min(followersCount, followingCount);
+
+                analysisData = {
+                    followers: followersCount,
+                    following: followingCount,
+                    notFollowingBack: notFollowingBack,
+                    notFollowingBackCount: notFollowingBack,
+                    notFollowingThem: notFollowingThem,
+                    notFollowingThemCount: notFollowingThem,
+                    mutual: mutual,
+                    mutualCount: mutual
+                };
+
+                // Show results
+                document.getElementById('followersCount').textContent = followersCount;
+                document.getElementById('followingCount').textContent = followingCount;
+                document.getElementById('notFollowingCount').textContent = notFollowingBack;
+                document.getElementById('notFollowingThemCount').textContent = notFollowingThem;
+                document.getElementById('mutualCount').textContent = mutual;
+
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('results').style.display = 'block';
+                
+                showSuccess(`Quick estimate: ${notFollowingBack} people you follow are not following you back!`);
+            }, 1000);
+        }
+
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('success').style.display = 'none';
+        }
+
+        function showError(message) {
+            document.getElementById('error').textContent = message;
+            document.getElementById('error').style.display = 'block';
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            document.getElementById('success').textContent = message;
+            document.getElementById('success').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('success').style.display = 'none';
+            }, 3000);
+        }
+
+        function downloadResults() {
+            if (!analysisData) return;
+
+            const csvContent = [
+                'metric,value',
+                `followers,${analysisData.followers}`,
+                `following,${analysisData.following}`,
+                `not_following_back,${analysisData.notFollowingBack}`,
+                `you_not_following,${analysisData.notFollowingThem}`,
+                `mutual,${analysisData.mutual}`
+            ].join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'instagram_estimate.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            showSuccess('Download started!');
+        }
+
+        // iOS optimizations
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        if (isIOS) {
+            document.body.style.webkitUserSelect = 'none';
+            document.body.style.webkitTouchCallout = 'none';
+        }
+    </script>
+</body>
+</html>
