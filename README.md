@@ -1,16 +1,30 @@
-# 📱 Instagram Follower Checker for iPhone
+# 🚀 Instagram Follower Checker - One Click Analysis
 
-A mobile-friendly web app that helps you identify Instagram accounts you follow who don't follow you back. Works perfectly on iPhone Safari!
+**The easiest way to find who's not following you back on Instagram!**
+
+No copying, no manual input - just one button press and you get instant results. Works on desktop browsers with a simple Chrome extension.
 
 ## 🚀 Quick Start
 
-### Option 1: Use the Web App (Easiest)
-1. **Open Safari on your iPhone**
-2. **Go to**: [Your deployed URL here]
-3. **Follow the instructions** to paste your Instagram data
-4. **Get instant results** showing who's not following you back
+### Option 1: Chrome Extension (Recommended - One Click!)
+1. **Install the Chrome Extension**:
+   - Download the extension files
+   - Open Chrome and go to `chrome://extensions/`
+   - Enable "Developer mode"
+   - Click "Load unpacked" and select the extension folder
 
-### Option 2: Run Locally
+2. **Use the Extension**:
+   - Go to Instagram.com and log in
+   - Click the extension icon in your browser
+   - Press "Extract Instagram Data"
+   - Get instant results!
+
+### Option 2: Web App (Manual Input)
+1. **Open the web app** in any browser
+2. **Follow the instructions** to manually input your data
+3. **Get results** showing who's not following you back
+
+### Option 3: Run Locally
 1. **Install dependencies**:
    ```bash
    npm install
@@ -21,58 +35,61 @@ A mobile-friendly web app that helps you identify Instagram accounts you follow 
    npm start
    ```
 
-3. **Open on iPhone**:
-   - Make sure your iPhone and computer are on the same WiFi network
-   - Find your computer's IP address (e.g., `192.168.1.100`)
-   - Open Safari on iPhone and go to: `http://192.168.1.100:3000`
+3. **Open in browser**: `http://localhost:3000`
 
 ## 📋 How to Use
 
-### Step 1: Get Your Instagram Data
-1. **Open Instagram.com** in Safari on your iPhone
-2. **Go to your profile page** (tap your profile picture)
-3. **Tap "followers"** to see your followers list
-4. **Copy all usernames** (you can select all and copy)
-5. **Tap "following"** to see who you follow
-6. **Copy all usernames** from that list too
+### Chrome Extension (One Click!)
+1. **Install the extension** (see Quick Start above)
+2. **Go to Instagram.com** and log in to your account
+3. **Navigate to your profile page**
+4. **Click the extension icon** in your browser toolbar
+5. **Press "Extract Instagram Data"**
+6. **Wait for extraction** (takes 1-3 minutes depending on follower count)
+7. **View results** and download CSV if needed
 
-### Step 2: Analyze Your Data
-1. **Paste your followers** into the first text box
-2. **Paste your following** into the second text box
-3. **Tap "Analyze Data"**
-4. **View your results** instantly!
+### Web App (Manual Input)
+1. **Open Instagram.com** in your browser
+2. **Go to your profile page**
+3. **Manually copy followers and following lists**
+4. **Paste into the web app**
+5. **Get instant analysis**
 
-### Step 3: Export Results
-- **Download CSV**: Get a file with all the data
-- **Copy to clipboard**: Quick summary for sharing
+### What You Get
+- **Total followers and following counts**
+- **Who's not following you back**
+- **Who you're not following back**
+- **Mutual followers**
+- **CSV export** with all data
 
 ## ✨ Features
 
-- 📱 **iPhone Optimized**: Designed specifically for mobile Safari
+- 🚀 **One Click Analysis**: Just press a button and get results
 - 🔒 **Privacy First**: All processing happens on your device
-- ⚡ **Instant Results**: No waiting, no server delays
+- ⚡ **Automatic Extraction**: No manual copying required
 - 📊 **Detailed Analysis**: 
   - Total followers/following counts
   - Who's not following you back
   - Who you're not following back
   - Mutual followers
-- 📥 **Easy Export**: Download CSV or copy to clipboard
+- 📥 **Easy Export**: Download CSV with all data
 - 🎨 **Beautiful UI**: Modern, intuitive design
+- 🔧 **Multiple Options**: Chrome extension, web app, or local server
 
 ## 🔧 Technical Details
 
-### Why Not Automatic?
-Instagram's security policies prevent automatic data extraction without:
-- Instagram Business/Creator account
-- Facebook Developer account
-- Instagram Graph API access
-- Meta app review approval
+### How the Extension Works
+1. **Content Script**: Runs on Instagram pages to extract data
+2. **Automatic Scrolling**: Scrolls through all followers/following lists
+3. **Data Extraction**: Captures usernames from the DOM
+4. **Local Processing**: All analysis happens in your browser
+5. **Secure**: Your data never leaves your device
 
-### How It Works
-1. **Manual Input**: You paste your follower/following lists
-2. **Local Processing**: All analysis happens in your browser
-3. **Instant Results**: No server calls, no data storage
-4. **Secure**: Your data never leaves your device
+### Browser Compatibility
+- **Chrome/Edge**: Full support with extension
+- **Firefox**: Extension support (requires adaptation)
+- **Safari**: Limited extension support
+- **Mobile**: Web app version available
 
 ## 🛠️ Development
 
@@ -98,8 +115,13 @@ npm start
 
 ### Project Structure
 ```
-├── index.html          # Simple demo version
+├── manifest.json       # Chrome extension manifest
+├── popup-simple.html   # Simple one-click popup interface
+├── popup-simple.js     # Popup JavaScript logic
+├── content.js          # Content script for Instagram data extraction
+├── index.html          # Web app with manual input
 ├── mobile-app.html     # Full-featured mobile app
+├── instagram-extractor.html # Auto mode web app
 ├── server.js           # Express server for enhanced features
 ├── package.json        # Dependencies and scripts
 └── README.md          # This file

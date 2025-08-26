@@ -1,11 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "Fake Friends Exposed",
-  "version": "1.0.0",
-  "description": "Extract your Instagram followers and following lists, compare, and export to CSV/JSON.",
+  "name": "Instagram Follower Checker",
+  "version": "2.0.0",
+  "description": "One-click Instagram follower analysis - automatically extract and analyze your followers and following lists.",
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Fake Friends Exposed",
+    "default_title": "Instagram Follower Checker",
     "default_icon": {
       "16": "icons/icon-16.png",
       "32": "icons/icon-32.png"
@@ -24,6 +24,12 @@
       "matches": ["https://www.instagram.com/*"],
       "js": ["content.js"],
       "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["injected.js"],
+      "matches": ["https://www.instagram.com/*"]
     }
   ]
 }
