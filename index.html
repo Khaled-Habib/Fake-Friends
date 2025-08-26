@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Follower Checker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 30px 20px;
+        }
+
+        .step {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .step h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .step p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .results {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8f5e8;
+            border-radius: 12px;
+            border: 1px solid #4caf50;
+        }
+
+        .results h3 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .stat strong {
+            color: #333;
+        }
+
+        .download-btn {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid #ffcdd2;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .instructions h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .instructions ol {
+            color: #856404;
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📱 Instagram Follower Checker</h1>
+            <p>Find who's not following you back</p>
+        </div>
+
+        <div class="content">
+            <div class="instructions">
+                <h3>📋 How to use:</h3>
+                <ol>
+                    <li>Open Instagram in Safari on your iPhone</li>
+                    <li>Go to your profile page</li>
+                    <li>Make sure you're logged in</li>
+                    <li>Come back here and tap "Start Analysis"</li>
+                </ol>
+            </div>
+
+            <div class="step">
+                <h3>🔍 Step 1: Open Instagram</h3>
+                <p>Open Instagram in Safari and go to your profile page. Make sure you're logged in to your account.</p>
+                <button class="btn" onclick="openInstagram()">Open Instagram</button>
+            </div>
+
+            <div class="step">
+                <h3>📊 Step 2: Start Analysis</h3>
+                <p>Once you're on your Instagram profile, come back here and start the analysis. This will check your followers and following lists.</p>
+                <button class="btn" id="analyzeBtn" onclick="startAnalysis()" disabled>Start Analysis</button>
+            </div>
+
+            <div id="loading" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Analyzing your Instagram data...</p>
+                <p style="font-size: 12px; color: #666; margin-top: 10px;">This may take a few minutes depending on how many followers you have.</p>
+            </div>
+
+            <div id="results" class="results" style="display: none;">
+                <h3>📈 Results</h3>
+                <div class="stat">
+                    <span>Total Followers:</span>
+                    <strong id="followersCount">0</strong>
+                </div>
+                <div class="stat">
+                    <span>Total Following:</span>
+                    <strong id="followingCount">0</strong>
+                </div>
+                <div class="stat">
+                    <span>Not Following Back:</span>
+                    <strong id="notFollowingCount">0</strong>
+                </div>
+                <button class="download-btn" onclick="downloadResults()">📥 Download Results</button>
+            </div>
+
+            <div id="error" class="error" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        let analysisData = null;
+
+        function openInstagram() {
+            // Try to open Instagram in Safari
+            const instagramUrl = 'https://www.instagram.com/';
+            window.open(instagramUrl, '_blank');
+            
+            // Enable the analyze button after a delay
+            setTimeout(() => {
+                document.getElementById('analyzeBtn').disabled = false;
+                document.getElementById('analyzeBtn').textContent = 'Start Analysis';
+            }, 2000);
+        }
+
+        function startAnalysis() {
+            // Show loading state
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('analyzeBtn').disabled = true;
+            document.getElementById('analyzeBtn').textContent = 'Analyzing...';
+
+            // Simulate analysis (in a real app, this would connect to Instagram's API)
+            setTimeout(() => {
+                // Mock data for demonstration
+                analysisData = {
+                    followers: generateMockUsernames(1500),
+                    following: generateMockUsernames(1200),
+                    notFollowingBack: generateMockUsernames(300)
+                };
+
+                // Show results
+                document.getElementById('followersCount').textContent = analysisData.followers.length;
+                document.getElementById('followingCount').textContent = analysisData.following.length;
+                document.getElementById('notFollowingCount').textContent = analysisData.notFollowingBack.length;
+
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('results').style.display = 'block';
+                document.getElementById('analyzeBtn').disabled = false;
+                document.getElementById('analyzeBtn').textContent = 'Analyze Again';
+            }, 3000);
+        }
+
+        function generateMockUsernames(count) {
+            const usernames = [];
+            for (let i = 0; i < count; i++) {
+                usernames.push(`user_${Math.floor(Math.random() * 100000)}`);
+            }
+            return usernames;
+        }
+
+        function downloadResults() {
+            if (!analysisData) return;
+
+            // Create CSV content
+            const csvContent = [
+                'username,type',
+                ...analysisData.notFollowingBack.map(username => `${username},not_following_back`)
+            ].join('\n');
+
+            // Create and download file
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'instagram_analysis.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Check if we're on iOS
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        if (isIOS) {
+            // Add iOS-specific instructions
+            const instructions = document.querySelector('.instructions ol');
+            instructions.innerHTML += '<li>If prompted, allow this website to open Instagram</li>';
+        }
+    </script>
+</body>
+</html>

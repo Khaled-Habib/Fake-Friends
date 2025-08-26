@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Insta Follow Extractor</title>
+    <style>
+      :root {
+        --bg: #0f172a; /* slate-900 */
+        --card: #111827; /* gray-900 */
+        --muted: #94a3b8; /* slate-400 */
+        --text: #e5e7eb; /* gray-200 */
+        --accent: #6366f1; /* indigo-500 */
+        --accent-2: #22d3ee; /* cyan-400 */
+        --success: #10b981; /* emerald-500 */
+        --warning: #f59e0b; /* amber-500 */
+        --border: #1f2937; /* gray-800 */
+      }
+      html, body { margin:0; padding:0; }
+      body {
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+        color: var(--text);
+        width: 360px;
+        background: linear-gradient(135deg, rgba(99,102,241,.15), rgba(34,211,238,.05)) fixed, var(--bg);
+      }
+      .wrap { padding: 14px; }
+
+      .card {
+        background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00)), var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0,0,0,.25);
+      }
+      .card-head {
+        background: radial-gradient(120% 80% at 0% 0%, rgba(99,102,241,.35), transparent),
+                    radial-gradient(120% 80% at 100% 0%, rgba(34,211,238,.30), transparent);
+        padding: 14px 16px;
+        display: flex; align-items: center; justify-content: space-between;
+      }
+      .title {
+        display:flex; align-items:center; gap:10px;
+      }
+      .title h1 { margin:0; font-size: 16px; letter-spacing:.2px; }
+      .title .logo {
+        width: 28px; height: 28px; border-radius: 8px;
+        display:grid; place-items:center;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        box-shadow: inset 0 0 8px rgba(255,255,255,.25), 0 8px 16px rgba(0,0,0,.25);
+      }
+
+      .stats { display:flex; gap:8px; }
+      .badge {
+        background: rgba(255,255,255,.06);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 2px 10px;
+        font-size: 11px;
+      }
+
+      .card-body { padding: 12px 14px 14px; display: grid; gap: 12px; }
+      .row { display:flex; gap:8px; flex-wrap: wrap; }
+
+      .btn {
+        appearance: none;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 10px 12px;
+        background: rgba(255,255,255,.04);
+        color: var(--text);
+        cursor: pointer;
+        transition: transform .04s ease, background .2s ease, border-color .2s ease, opacity .2s ease;
+        box-shadow: 0 1px 2px rgba(0,0,0,.25), inset 0 -6px 12px rgba(0,0,0,.12);
+      }
+      .btn:hover { background: rgba(255,255,255,.06); }
+      .btn:active { transform: translateY(1px); }
+      .btn[disabled] { opacity:.6; cursor: not-allowed; }
+      .btn-primary {
+        background: linear-gradient(135deg, rgba(99,102,241,.85), rgba(34,211,238,.75));
+        border-color: rgba(99,102,241,.4);
+        color: #0b1020;
+        font-weight: 600;
+        box-shadow: 0 8px 16px rgba(34,211,238,.15), inset 0 -10px 16px rgba(0,0,0,.15);
+      }
+      .btn-primary:hover { filter: brightness(1.05); }
+
+      .grid { display:grid; grid-template-columns: 1fr auto; gap:6px 8px; align-items:center; }
+      .small { font-size: 12px; color: var(--muted); }
+      .grid .btn { padding: 6px 10px; font-size: 12px; }
+
+      .status {
+        font-size:12px; white-space: pre-wrap; max-height: 140px; overflow: auto;
+        background: rgba(2,6,23,.6);
+        padding:10px; border-radius: 10px; border:1px solid var(--border);
+      }
+      .muted { color: var(--muted); font-size: 12px; margin: 0; }
+      .footer { padding: 2px 2px 0; display:flex; justify-content: space-between; align-items:center; }
+      .tag { font-size: 10px; color: var(--muted); opacity: .9; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <div class="card-head">
+          <div class="title">
+            <div class="logo">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Z" stroke="white" opacity=".6" stroke-width="1.5"/>
+                <circle cx="17.5" cy="6.5" r="1.5" fill="white" opacity=".85"/>
+                <circle cx="12" cy="12" r="4.5" stroke="white" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <h1>Fake Friends Exposed</h1>
+          </div>
+          <div class="stats">
+            <span class="badge">Followers <b id="followers-count">0</b></span>
+            <span class="badge">Following <b id="following-count">0</b></span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="row">
+            <button id="show-fake-friends" class="btn btn-primary" style="flex:1">Show me the fake friends</button>
+          </div>
+
+          <pre id="status" class="status"></pre>
+          <div class="footer">
+            <p class="muted">Open your Instagram profile and log in.</p>
+            <span class="tag">v1.0.0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
